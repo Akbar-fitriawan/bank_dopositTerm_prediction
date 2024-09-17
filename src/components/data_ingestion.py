@@ -4,6 +4,8 @@ from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
 
+from src.components.clean_data import clean_data
+
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
@@ -25,6 +27,11 @@ class DataIngestion:
             # read data 
             df = pd.read_csv("notebook\data\\bank_marketing.csv", sep=';', na_values='unknown')
             logging.info("Read the data as dataframe")
+
+            # cleaning data
+            df = clean_data(data=df)
+            logging.info("Cleaning data and selected feature import")
+
 
             # buat folder data
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)

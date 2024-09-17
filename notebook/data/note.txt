@@ -1,0 +1,19 @@
+Fitur yang dipilih Kbest mutual information ['duration', 'campaign', 'pdays', 'previous', 'emp_var_rate', 'cons_price_idx', 'cons_conf_idx', 'job', 'contact', 'month', 'poutcome', 'age_group']
+
+Fitur yang dipilih Kbest chi-square : ['job', 'education', 'contact', 'poutcome', 'age_group']
+Fitur yang dipilih Kbest Anova-test dan VIF: ['duration', 'campaign', 'pdays', 'previous', 'emp_var_rate', 'cons_price_idx', 'cons_conf_idx']
+
+
+# chi-square + Anova-test dan VIF
+feature_selected = ['job',
+                    'education',
+                    'contact',
+                    'poutcome',
+                    'age_group',
+                    'duration',
+                    'campaign',
+                    'pdays',
+                    'previous',
+                    'emp_var_rate',
+                    'cons_price_idx',
+                    'cons_conf_idx']
