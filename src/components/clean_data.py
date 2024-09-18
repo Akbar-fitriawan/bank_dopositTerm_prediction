@@ -44,6 +44,9 @@ def clean_data(data):
         # ubah pdays '999' jadi '0' mengacu kepada customer yang belum di hubungi
         data['pdays'] = data['pdays'].replace(999, 0)
 
+        # ubah data label target jadi 0 dan 1, 
+        data['y'].map({'no':0, 'yes':1})
+
         # drop kolom tidak relevan
         feature_selected = ['job',
                             'education',
