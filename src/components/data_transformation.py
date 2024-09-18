@@ -2,6 +2,7 @@ import sys
 import os
 
 import pandas as pd
+import numpy as np
 from dataclasses import dataclass
 
 from sklearn.pipeline import Pipeline
@@ -56,7 +57,7 @@ class DataTransformation:
             raise CustomException(e, sys)
             
 
-    def transform_data(self, train_path, test_path):
+    def initiate_transform_data(self, train_path, test_path):
         
         try:
             # read data dari direktori
@@ -82,15 +83,18 @@ class DataTransformation:
             input_feature_train = preproc.fit_transform(input_train_df)
             input_feature_test = preproc.transform(input_test_df)
 
-            train_df_result = pd.concat([input_feature_train, target_train_series], axis=1)
-            test_df_result = pd.concat([input_feature_test, target_test_series], axis=1)
+            # train_df_result = pd.concat([input_feature_train, target_train_series], axis=1)
+            # test_df_result = pd.concat([input_feature_test, target_test_series], axis=1)
+
+            train_arr = np.c_[input_feature_train, target_train_series]
+            test_arr = np.c_[input_feature_test, target_test_series]
 
             save_object(
                 file_path = self.data_transformation_config.prepocessor_obj_file_path,
                 obj = preproc
             )
 
-            return (train_df_result, test_df_result, self.data_transformation_config.prepocessor_obj_file_path)
+            return (train_arr, test_arr, self.data_transformation_config.prepocessor_obj_file_path)
         
         except Exception as e:
             raise CustomException(e, sys)
