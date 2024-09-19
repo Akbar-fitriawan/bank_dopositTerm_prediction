@@ -2,6 +2,10 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+
+from sklearn.impute import SimpleImputer
+from feature_engine.outliers import Winsorizer
+
 from src.exception import CustomException
 
 ## Buat feature group_age
@@ -68,3 +72,60 @@ def clean_data(data):
         raise CustomException(e, sys)
     
     return data
+
+def imputer_missing_value(X_train, X_test,num_cols=None, cat_cols=None):
+    # Mengimputasi kolom numerik
+    if num_cols:
+        num_imputer = SimpleImputer(strategy='median')
+        X_train[num_cols] = num_imputer.fit_transform(X_train[num_cols])
+        X_test[num_cols] = num_imputer.transform(X_test[num_cols])
+
+    # Mengimputasi kolom kategorikal
+    if cat_cols:
+        cat_imputer = SimpleImputer(strategy='most_frequent')
+        X_train[cat_cols] = cat_imputer.fit_transform(X_train[cat_cols])
+        X_test[cat_cols] = cat_imputer.transform(X_test[cat_cols])
+    
+    return X_train, X_test
+   
+
+
+
+def outlier_handler(X_train, X_test, cols_outlier):
+  #cek data normal dan tidak normal
+  list_cols_normal = []
+  list_cols_Not_normal = []
+
+  for col in X_train[cols_outlier]:
+
+    skew = X_train[col].skew()
+    kurtosis = X_train[col].kurt()
+
+    if -0.5 < skew < 0.5 and kurtosis < 3:
+      list_cols_normal.append(col)
+      
+    else:
+      list_cols_Not_normal.append(col)
+
+  # handling outlier
+  winsorizer_normal_dist = Winsorizer(capping_method='gaussian',
+                                      tail='both',
+                                      fold=3,
+                                      variables=list_cols_normal,
+                                      missing_values='ignore')
+
+  winsorizer_not_normal_dist = Winsorizer(capping_method='iqr',
+                                 tail='both',
+                                 fold=1.5,
+                                 variables=list_cols_Not_normal,
+                                 missing_values='ignore')
+
+  X_train = winsorizer_normal_dist.fit_transform(X_train)
+  X_test = winsorizer_normal_dist.transform(X_test)
+
+
+  X_train = winsorizer_not_normal_dist.fit_transform(X_train)
+  X_test = winsorizer_not_normal_dist.transform(X_test)
+
+
+  return X_train, X_test

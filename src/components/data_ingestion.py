@@ -7,9 +7,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-from src.components.clean_data import clean_data
+from src.components.clean import clean_data, outlier_handler, imputer_missing_value
+
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
+
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 
 @dataclass
 class DataIngestionConfig:
@@ -45,6 +50,16 @@ class DataIngestion:
             logging.info("Train test split initiate")
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
+            # handling missing value
+            num_cols = ['duration', 'campaign', 'pdays', 'previous', 'emp_var_rate', 'cons_price_idx', 'cons_conf_idx']
+            cat_cols = ['age_group','job', 'education', 'contact', 'poutcome']
+
+            train_set, test_set = imputer_missing_value(train_set, test_set, num_cols, cat_cols)
+
+            # handling outlier
+            outlier = ['duration', 'campaign', 'cons_conf_idx']
+            train_set, test_set = outlier_handler(train_set, test_set, cols_outlier=outlier)
+
             # export ke folder data train
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
 
@@ -62,8 +77,11 @@ class DataIngestion:
             raise CustomException(e, sys)
         
 if __name__ == "__main__":
-    obj = DataIngestion()
-    train_data, test_data = obj.initiate_data_ingestion()
+    obj=DataIngestion()
+    train_data,test_data=obj.initiate_data_ingestion()
 
-    data_transformation = DataTransformation()
-    data_transformation.initiate_transform_data(train_data, test_data)
+    data_transformation=DataTransformation()
+    train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
+
+    modeltrainer=ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
