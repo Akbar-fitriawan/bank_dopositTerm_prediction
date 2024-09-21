@@ -1,12 +1,9 @@
 import os
 import sys
 from dataclasses import dataclass
-import numpy as np
-import pandas as pd
-import joblib
+# import numpy as np
+# import pandas as pd
 
-from imblearn.over_sampling import SMOTE as smote
-from imblearn.pipeline import Pipeline as ImbPipeline
 
 # Pemodelan ML
 from sklearn.linear_model import LogisticRegression
@@ -17,27 +14,14 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from xgboost import XGBClassifier
-
-
-
-# Evaluasi model
-from sklearn.metrics import (accuracy_score, 
-                             precision_score,
-                             recall_score,
-                             f1_score,
-                             classification_report,
-                             confusion_matrix,
-                             roc_curve,
-                             roc_auc_score,
-                             precision_recall_curve,
-                             average_precision_score)
 # ----------------------------------------------#
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import StratifiedKFold
+
+from sklearn.metrics import f1_score, make_scorer, roc_auc_score
 
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object
+
+from src.utils import save_object, train_models, grid_search_tuning_hyperparameter
 
 
 @dataclass
@@ -72,71 +56,79 @@ class ModelTrainer:
                 'SVM': SVC() 
             }
 
-            # get pipeline models
-            seed = 42
-            np.random.seed(seed)
-            skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
-            trained_models = {}
-            cv_results = []
+            # traning models
+            print("Training models...")
+            base_model_tebaik = train_models(models, X_train, y_train, X_test, y_test)
 
-            for model_name, model in models.items():
-            
-                pipe_model = ImbPipeline(steps=[
-                    # ('preproc', preprocessor),
-                    ('oversample', smote(random_state=seed)),
-                    ('model', model)
-                ])
+            # Define parameter grids for GridSearchCV 
+            param_grids = {
+                'Logistic Regression': {
+                    'model__C': [0.01, 0.1, 1., 10.],  # Mengurangi jumlah C untuk runtime lebih singkat
+                    'model__solver': ['liblinear'],  # Fokus pada solver cepat dan umum untuk dataset kecil-menengah
+                    'model__penalty': ['l1', 'l2'],
+                    'model__class_weight': ['balanced']
+                },
+                
+                'KNN': {
+                    'model__n_neighbors': [5, 7, 9],  # Rentang tetangga lebih kecil untuk efisiensi
+                    'model__weights': ['uniform', 'distance'],  # Pertahankan kedua opsi bobot
+                    'model__p': [1, 2]  # Manhattan dan Euclidean distance
+                },
+                
+                'Decision Tree': {
+                    'model__max_depth': [5, 7, 9],  # Mengurangi kedalaman maksimal
+                    'model__min_samples_split': [2, 4],  # Membatasi variasi split
+                    'model__min_samples_leaf': [1, 2],  # Mengurangi jumlah sampel daun
+                    'model__class_weight': ['balanced'],
+                    'model__max_features': ['sqrt', 'log2']  # Menghilangkan opsi 'auto' untuk runtime lebih singkat
+                },
+                
+                'Gaussian Naive Bayes': {
+                    'model__var_smoothing': [1e-9, 1e-8, 1e-7]  # Variasi smoothing untuk stabilitas model
+                },
 
-                # Training the model
-                pipe_model.fit(X_train, y_train)
+                'Random Forest': {
+                    'model__n_estimators': [100, 200],  # Kurangi jumlah estimator untuk runtime lebih singkat
+                    'model__max_depth': [5, 7],  # Hanya dua opsi kedalaman untuk efisiensi
+                    'model__min_samples_split': [2, 4],
+                    'model__min_samples_leaf': [1, 2]
+                },
+                
+                'Gradient Boosting': {
+                    'model__n_estimators': [100, 200],  # Jumlah estimator yang lebih kecil
+                    'model__learning_rate': [0.01, 0.1],  # Fokus pada rentang learning rate yang sering digunakan
+                },
+                
+                'Xgboost': {
+                    'model__n_estimators': [100, 200],  # Mengurangi jumlah estimator
+                    'model__learning_rate': [0.01, 0.1],  # Rentang learning rate umum untuk runtime efisien
+                }, 
 
-                # cross validataion
-                cv_scores = cross_val_score(pipe_model, X_train, y_train, cv=skf, scoring='accuracy')
+                'SVM': {
+                    'model__C': [0.1, 1, 10],  # Rentang C yang umum digunakan untuk kontrol regularisasi
+                    'model__kernel': ['linear', 'rbf'],  # Dua kernel umum, fokus pada performa yang efisien
+                    'model__gamma': ['scale', 'auto'],  # Parameter gamma untuk kernel RBF
+                    'model__class_weight': ['balanced']
+                }
+            }
 
-                # predict to evaluate
-                y_pred = pipe_model.predict(X_test)
 
-                # Menyimpan model yang telah dilatih
-                trained_models[model_name] = pipe_model
+            # Parameter tuning
+            print("Tuning models...")
+            scoring = make_scorer(roc_auc_score) # score bisa di ubah sesuai kebutuhan 
 
-                cv_results.append({
-                'model_name': model_name,
-                'avg_score': cv_scores.mean(),
-                'std_score': cv_scores.std(),
-                })
-
-                print(model_name)
-                print(f'Accuracy Score : {accuracy_score(y_test, y_pred):.4f}')
-                print(f"CV Accuracy: {np.mean(cv_scores):.4f} ± {np.std(cv_scores):.4f}")
-                print(cv_scores)
-                print('-' * 30, '\n')
-            
-            # get best model without cross val
-            cv_results_df = pd.DataFrame(cv_results)
-
-            best_model_row = cv_results_df.loc[cv_results_df['avg_score'].idxmax()]
-            best_model_name = best_model_row['model_name']
-            best_model_score = best_model_row['avg_score']
-
-            best_model = trained_models[best_model_name]
-
-            if best_model_score < 0.7:
-                raise CustomException("No best model found")
-            logging.info(f"Best model found with high cross validation score")
+            best_model = grid_search_tuning_hyperparameter(
+                                                              models,
+                                                              X_train,
+                                                              y_train,
+                                                              param_grids,
+                                                              scoring=scoring,)
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
-
-            prediction = best_model.predict(X_test)
-
-            acc = accuracy_score(y_test, prediction)
             
 
-            return acc
-
-            # predicted = best_model.predict(X_test)
-            # acc = accuracy_score(y_test, predicted)
         except Exception as e:
             raise CustomException(e, sys)
