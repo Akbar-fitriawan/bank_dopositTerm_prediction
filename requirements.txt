@@ -7,4 +7,5 @@ feature-engine
 xgboost
 imblearn
 tensorflow
+Flask
 #-e .
