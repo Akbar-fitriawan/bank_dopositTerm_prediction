@@ -1,0 +1,5 @@
+{
+    "model__weights": "uniform",
+    "model__p": 2,
+    "model__n_neighbors": 5
+}

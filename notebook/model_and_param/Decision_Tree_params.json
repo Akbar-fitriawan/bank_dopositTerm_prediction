@@ -1,0 +1,7 @@
+{
+    "model__min_samples_split": 6,
+    "model__min_samples_leaf": 4,
+    "model__max_features": "sqrt",
+    "model__max_depth": 14,
+    "model__class_weight": "balanced"
+}

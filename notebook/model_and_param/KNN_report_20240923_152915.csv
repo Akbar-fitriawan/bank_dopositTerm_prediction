@@ -1,0 +1,10 @@
+rank_test_score,mean_test_score,std_test_score,params
+1,0.8699283436259695,0.002555445658052213,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 5}"
+2,0.8643886668662665,0.0034043344972622884,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 7}"
+3,0.8611867844339557,0.003589048616996168,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 9}"
+4,0.8581618357910894,0.0037490220916557215,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 11}"
+5,0.8560885781812674,0.003914632755298342,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 13}"
+6,0.854302116167634,0.0035973514987463606,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 15}"
+7,0.8542291050228743,0.004025788980958506,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 19}"
+8,0.8541742826687869,0.0038199965119246337,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 17}"
+9,0.8533137011244601,0.003965744824438917,"{'model__weights': 'uniform', 'model__p': 2, 'model__n_neighbors': 21}"

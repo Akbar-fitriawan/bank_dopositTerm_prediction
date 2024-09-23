@@ -1,0 +1,11 @@
+rank_test_score,mean_test_score,std_test_score,params
+1,0.8656124427106133,0.0037586529457413497,"{'model__C': 5.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'liblinear'}"
+1,0.8656124427106133,0.0037586529457413497,"{'model__C': 5.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'lbfgs'}"
+1,0.8656124427106133,0.0037586529457413497,"{'model__C': 10.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'liblinear'}"
+1,0.8656124427106133,0.0037586529457413497,"{'model__C': 10.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'lbfgs'}"
+5,0.8656064797903481,0.003730104381639274,"{'model__C': 1.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'lbfgs'}"
+6,0.8655866492998359,0.0037636992839660834,"{'model__C': 0.5, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'lbfgs'}"
+7,0.8655724248873776,0.0037042526958048516,"{'model__C': 0.1, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'lbfgs'}"
+8,0.8655290070126792,0.003788547983838968,"{'model__C': 0.5, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'liblinear'}"
+9,0.8655289943783707,0.0037775029130820786,"{'model__C': 1.0, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'liblinear'}"
+10,0.8653078955407463,0.0035562122717043097,"{'model__C': 0.1, 'model__class_weight': 'balanced', 'model__penalty': 'l2', 'model__solver': 'liblinear'}"
