@@ -8,4 +8,5 @@ xgboost
 imblearn
 tensorflow
 Flask
+shap
 #-e .
