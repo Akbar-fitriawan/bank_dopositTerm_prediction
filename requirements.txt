@@ -9,4 +9,5 @@ imblearn
 tensorflow
 Flask
 shap
+scikeras
 #-e .
