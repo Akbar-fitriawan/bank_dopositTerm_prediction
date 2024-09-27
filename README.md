@@ -21,34 +21,34 @@ This project aims to predict whether a customer will subscribe to a term deposit
 
 The dataset used in this project is obtained from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/bank+marketing).
 
-## Tools
-
-- Data manipulation : Pandas, Numpy
-- Statistic : scipy
-- Outlier : feature-engine
-- Balancing data : Imblearn
-- Visualisasi : Matplotlib, seaborn
-- Model : Sklearn, Xgboost, Tensorflow keras
-- Deployment : Flask, hugging face
-
 ### Features:
 
 - **Age**: Age of the customer.
 - **Job**: Type of job.
-- **Education**:
-- **Contact**:
-- **Poutcome**:
-- **Duration**:
-- **Campaign**:
-- **Pdays**:
-- **Previous**:
-- **emp_var_rate**:
-- **cons_price_idx**:
+- **Education**: Education level.
+- **Contact**: Contact communication type.
+- Poutcome: Outcome of the previous marketing campaign.
+- **Duration**: Last contact duration.
+- **Campaign**: Number of contacts during this campaign.
+- **Pdays**: Days since the customer was last contacted.
+- **Previous**: Number of contacts performed before this campaign.
+- **emp_var_rate**: Employment variation rate.
+- **cons_price_idx**: Consumer price index.
 
 The target variable is `y`, which indicates whether the client subscribed to a term deposit:
 
 - **1**: Yes
 - **0**: No
+
+Tools and Libraries
+
+- **Data Manipulation**: Pandas, Numpy
+- **Statistical Analysis**: SciPy
+- **Outlier Handling**: Feature-engine
+- **Balancing Data**: Imblearn (SMOTE)
+- **Visualization**: Matplotlib, Seaborn
+- **Machine Learning Models**: Scikit-learn, XGBoost, TensorFlow (Keras)
+- **Deployment**: Flask, Hugging Face
 
 ## Machine Learning Workflow
 
@@ -144,27 +144,28 @@ python src/model_trainer
 
 ## Model Evaluation
 
-The best performing model was Xgboost, which achieved the following results on the test data:
+Model Evaluation
+The best-performing model was XGBoost, achieving:
 
 Accuracy: 89%
 Precision: 91%
 Recall: 89%
 F1-score: 90%
 
-Ada pun model Optimasi dengan hasil yang baik adalah Stacking algoritma dengan accuracy 90%
+The optimized Stacking Classifier achieved 90% accuracy.
 
 ### Confusion Matrix
 
 The confusion matrix for the best model is shown below:
-![Confusion Matrix](model_and_param\cm_xgboost.png)
+[Confusion Matrix](model_and_param\cm_xgboost.png)
 
 ### Classification Report
 
-![Classification Report](model_and_param\clf_report_xgboost.png)
+[Classification Report](model_and_param\clf_report_xgboost.png)
 
 ### ROC curve and Precision curve
 
-![Compare ROC curve and PR curve](model_and_param\compare_roc_pr.png)
+[Compare ROC curve and PR curve](model_and_param\compare_roc_pr.png)
 
 ## Contributing
 
@@ -172,7 +173,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## References
 
-- ![UCI Machine Learning Repository: Bank Marketing Dataset](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
+[UCI Machine Learning Repository: Bank Marketing Dataset](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
 
 ## License
 
