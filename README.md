@@ -147,9 +147,9 @@ python src/model_trainer
 Model Evaluation
 The best-performing model was XGBoost, achieving:
 
-Accuracy: 89%
-Precision: 91%
-Recall: 89%
+Accuracy: 89%  
+Precision: 91%  
+Recall: 89%  
 F1-score: 90%
 
 The optimized Stacking Classifier achieved 90% accuracy.
@@ -157,15 +157,15 @@ The optimized Stacking Classifier achieved 90% accuracy.
 ### Confusion Matrix
 
 The confusion matrix for the best model is shown below:
-[Confusion Matrix](model_and_param\cm_xgboost.png)
+![Confusion Matrix](model_and_param/cm_xgboost.png)
 
 ### Classification Report
 
-[Classification Report](model_and_param\clf_report_xgboost.png)
+![Classification Report](model_and_param/clf_report_xgboost.png)
 
 ### ROC curve and Precision curve
 
-[Compare ROC curve and PR curve](model_and_param\compare_roc_pr.png)
+![Compare ROC curve and PR curve](model_and_param/compare_roc_pr.png)
 
 ## Contributing
 
