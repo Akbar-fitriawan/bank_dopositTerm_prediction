@@ -136,7 +136,7 @@ python src/model_trainer
   python app.py
   ```
 
-  - Open your browser and go to `http://localhost:5000` to access the web interface.
+  - Open your browser and go to `http://localhost:5000/predictdata` to access the web interface.
 
 - Run Hugging face
 
