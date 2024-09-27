@@ -158,15 +158,33 @@ The optimized Stacking Classifier achieved 90% accuracy.
 
 The confusion matrix for the best model is shown below:
 
-![Confusion Matrix](/notebook/model_and_param/cm_xgboost.png)
+_Supervised model_
+
+![Confusion Matrix Xgboost](/notebook/model_and_param/cm_xgboost.png)
+
+_Stacking model_
+
+![Confusion Matrix stacking](/notebook/model_and_param/cm_stacking_clf.png)
 
 ### Classification Report
 
+_Supervised model_
+
 ![Classification Report](/notebook/model_and_param/clf_report_xgboost.png)
+
+_Stacking model_
+
+![Classification Report](/notebook/model_and_param/stacking_clf_report.png)
 
 ### ROC curve and Precision curve
 
+_Supervised model_
+
 ![Compare ROC curve and PR curve](/notebook/model_and_param/compare_roc_pr.png)
+
+_Stacking model_
+
+![Compare ROC curve and PR curve](notebook/model_and_param/stacking_clf_roc_pr.png)
 
 ## Contributing
 
