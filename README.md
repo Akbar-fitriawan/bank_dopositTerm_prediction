@@ -1,29 +1,49 @@
-## # Bank Marketing Campaign Prediction
+## Bank Marketing Term Deposit Subscription Prediction
 
 ## Project Overview
 
-This project aims to predict whether a customer will subscribe to a term deposit based on data from a bank marketing campaign. Using machine learning techniques, we analyze customer data and campaign results to build predictive models for binary classification.
+This project aims to predict whether a customer will subscribe to a term deposit based on data from a bank's marketing campaign. Using machine learning techniques, we analyze customer data and campaign outcomes to build predictive models for binary classification.
 
 ## Key Features
 
-- **Data Preprocessing**: Handling missing values, encoding categorical variables, feature scaling.
-- **SMOTE**: Oversampling technique for handling class imbalance.
-- **Multiple Classifiers**: Models like Logistic Regression, Random Forest, Decision Tree, Gradient Boosting, and XGBoost.
-- **Model Evaluation**: Cross-validation with StratifiedKFold, performance metrics like accuracy, precision, recall, and F1-score.
-- **Hyperparameter Tuning**: GridSearchCV and RandomizedSearchCV for optimal model selection.
-- **Flask App**: A web-based interface for model prediction.
+- **Exploratory Data Analysis (EDA)**: Identifying patterns and insights within the data.
+- **Data Preprocessing**: Handling missing values, encoding categorical variables, and applying feature scaling.
+- **SMOTE**: Using the Synthetic Minority Over-sampling Technique to address class imbalance.
+- **Multiple Classifiers**: Implementing various models such as Logistic Regression, Random Forest, Decision Tree, Gradient Boosting, and XGBoost.
+- **Model Evaluation**: Performing cross-validation with StratifiedKFold and evaluating models using accuracy, precision, recall, and F1-score.
+- **Hyperparameter Tuning**: Utilizing GridSearchCV and RandomizedSearchCV to optimize model performance.
+- **Decision-making**: Outputting predictions as either "yes" or "no" for term deposit subscription.
+- **Model Optimization with Advanced Algorithms**: Implementing techniques such as Voting Classifier, Stacking Classifier, and Simple Blending to improve performance.
+- **Deep Learning**: Incorporating an Artificial Neural Network (ANN) model for enhanced predictions.
+- **Deployment**: Deploying a web-based interface for model predictions using a Flask app, integrated with Hugging Face for model hosting.
 
 ## Data
 
 The dataset used in this project is obtained from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/bank+marketing).
 
+## Tools
+
+- Data manipulation : Pandas, Numpy
+- Statistic : scipy
+- Outlier : feature-engine
+- Balancing data : Imblearn
+- Visualisasi : Matplotlib, seaborn
+- Model : Sklearn, Xgboost, Tensorflow keras
+- Deployment : Flask, hugging face
+
 ### Features:
 
 - **Age**: Age of the customer.
 - **Job**: Type of job.
-- **Marital**: Marital status.
-- **Education**: Level of education.
-- **... (list all relevant features)**
+- **Education**:
+- **Contact**:
+- **Poutcome**:
+- **Duration**:
+- **Campaign**:
+- **Pdays**:
+- **Previous**:
+- **emp_var_rate**:
+- **cons_price_idx**:
 
 The target variable is `y`, which indicates whether the client subscribed to a term deposit:
 
@@ -52,60 +72,108 @@ The target variable is `y`, which indicates whether the client subscribed to a t
    - Tuning hyperparameters using **GridSearchCV** and **RandomizedSearchCV** for selected models.
 
 5. **Deployment**:
-   - Deploying the final model with **Flask** to create a simple prediction app.
+   - Deploying the final model with **Flask** to create a simple prediction app. and hugging face the same way.
 
 ## Installation
 
-Clone the repository and install the necessary dependencies.
+To run this project locally, follow these steps:
 
-````bash
-git clone https://github.com/yourusername/bank-marketing-prediction.git
-cd bank-marketing-prediction
-pip install -r requirements.txt
+1. Clone the repository:
 
-
-
-Instruksi sederhana untuk mengklon repository dan menginstal dependencies yang diperlukan. Jangan lupa menyertakan file `requirements.txt` yang berisi semua package yang dibutuhkan.
-
-### 7. **Penggunaan**
-```markdown
-## Usage
-1. **Train the Model**:
-   - Run the following command to preprocess the data, train the models, and evaluate them.
    ```bash
-   python train.py
-````
-
-2. **Run Flask App**:
-   - To use the deployed model for prediction, run the Flask app.
-   ```bash
-   python app.py
+   git clone https://github.com/Akbar-fitriawan/bank-marketing-prediction.git
+   cd bank-marketing-prediction
    ```
-   - Open your browser and go to `http://localhost:5000` to access the web interface.
+
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Prerequisites:
+
+Make sure you have Python 3.8+ installed. Key libraries include:
+
+```bash
+# requirement.txt
+pandas
+numpy
+seaborn
+matplotlib
+scikit-learn
+feature-engine
+xgboost
+imblearn
+tensorflow
+Flask
+shap
+scikeras
+```
+
+## Usage
+
+After setting up the environment, you can run the model training and evaluation with the following command:
+
+**Compare all process**
+
+```bash
+python src/main.py
+```
+
+**Training and tuning model**
+
+```bash
+python src/model_trainer
+```
+
+**Playground**
+
+- Run Flask App
+
+  - To use the deployed model for prediction, run the Flask app.
+
+  ```bash
+  python app.py
+  ```
+
+  - Open your browser and go to `http://localhost:5000` to access the web interface.
+
+- Run Hugging face
+
+  - Open your browser and go to `https://huggingface.co/spaces/Afitriawan/bank-marketing` and try it.
 
 ## Model Evaluation
+
+The best performing model was Xgboost, which achieved the following results on the test data:
+
+Accuracy: 89%
+Precision: 91%
+Recall: 89%
+F1-score: 90%
+
+Ada pun model Optimasi dengan hasil yang baik adalah Stacking algoritma dengan accuracy 90%
 
 ### Confusion Matrix
 
 The confusion matrix for the best model is shown below:
-![Confusion Matrix](path_to_confusion_matrix_image)
+![Confusion Matrix](model_and_param\cm_xgboost.png)
 
 ### Classification Report
 
-```bash
-Precision: 0.85
-Recall: 0.70
-F1-Score: 0.77
-Accuracy: 0.80
+![Classification Report](model_and_param\clf_report_xgboost.png)
 
+### ROC curve and Precision curve
+
+![Compare ROC curve and PR curve](model_and_param\compare_roc_pr.png)
 
 ## Contributing
+
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## References
-- [UCI Machine Learning Repository: Bank Marketing Dataset](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
 
+- ![UCI Machine Learning Repository: Bank Marketing Dataset](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
