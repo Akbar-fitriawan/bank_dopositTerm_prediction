@@ -1,4 +1,4 @@
-## Bank Marketing Term Deposit Subscription Prediction
+# Bank Marketing Term Deposit Subscription Prediction
 
 ## Project Overview
 
@@ -153,6 +153,8 @@ Recall: 89%
 F1-score: 90%
 
 The optimized Stacking Classifier achieved 90% accuracy.
+
+Note : the ann model has sufficient performance so it is not included in the deploy model
 
 ### Confusion Matrix
 
