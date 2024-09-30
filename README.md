@@ -123,7 +123,7 @@ python src/main.py
 **Training and tuning model**
 
 ```bash
-python src/model_trainer
+python src/model_trainer.py
 ```
 
 **Playground**
