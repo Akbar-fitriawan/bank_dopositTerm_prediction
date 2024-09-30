@@ -81,7 +81,7 @@ To run this project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Akbar-fitriawan/bank-marketing-prediction.git
+   git clone https://github.com/Akbar-fitriawan/bank_dopositTerm_prediction.git
    cd bank-marketing-prediction
    ```
 
